@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Futebol</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #6ea30a;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .team {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #5da140;
+            color: white;1
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .dark-mode {
+            background-color: #333;
+            color: white;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SIMULANDO FUT Simulador de Futebol</h1>
+        <select id="team1Select">
+            <optgroup label="Série A">
+                <option value="Flamengo">Flamengo</option>
+                <option value="Palmeiras">Palmeiras</option>
+                <option value="São Paulo">São Paulo</option>
+                <option value="Corinthians">Corinthians</option>
+                <option value="Atlético-MG">Atlético-MG</option>
+                <option value="Botafogo">Botafogo</option>
+                <option value="Fluminense">Fluminense</option>
+            </optgroup>
+            <optgroup label="Série B">
+                <option value="Cruzeiro">Cruzeiro</option>
+                <option value="Vasco">Vasco</option>
+                <option value="Bahia">Bahia</option>
+                <option value="Grêmio">Grêmio</option>
+                <option value="Chapecoense">Chapecoense</option>
+                <option value="Goias">Goias</option>
+                <option value="Curitiba">Curitiba</option>
+                
+            </optgroup>
+            <optgroup label="Série D">
+                <option value="Brasiliense">Brasiliense</option>
+                <option value="Paysandu">Paysandu</option>
+                <option value="Santa Cruz">Santa Cruz</option>
+                <option value="Remo">Remo</option>
+                <option value="Juventude">Juventude</option>
+                <option value="Maringá FC">Maringá FC</option>
+                <option value="Inter de bebedouro">Inter de bebedouro</option>
+                <option value="Gama">Gama</option>
+                <option value="Portuguesa">Portuguesa</option>
+                
+ <optgroup label="Extintos (BETA)">
+              <option value="Real ituano">Real Ituano</option>
+              <option value="A.C. Juventus">A.C Juventus</option>
+        </select>
+        <div class="score" id="score1">0</div>
+        <select id="team2Select">
+            <optgroup label="Série A">
+                <option value="Flamengo">Flamengo</option>
+                <option value="Palmeiras">Palmeiras</option>
+                <option value="São Paulo">São Paulo</option>
+                <option value="Corinthians">Corinthians</option>
+                <option value="Atlético-MG">Atlético-MG</option>
+                <option value="Botafogo">Botafogo</option>
+                <option value="Fluminense">Fluminense</option>
+            </optgroup>
+            <optgroup label="Série B">
+                <option value="Cruzeiro">Cruzeiro</option>
+                <option value="Vasco">Vasco</option>
+                <option value="Bahia">Bahia</option>
+                <option value="Grêmio">Grêmio</option>
+                <option value="Chapecoense">Chapecoense</option>
+                <option value="Goias">Goias</option>
+                <option value="Curitiba">Curitiba</option>
+            </optgroup>
+            <optgroup label="Série D">
+                <option value="Brasiliense">Brasiliense</option>
+                <option value="Paysandu">Paysandu</option>
+                <option value="Santa Cruz">Santa Cruz</option>
+                <option value="Remo">Remo</option>
+                <option value="Juventude">Juventude</option>
+                <option value="Maringá FC">Maringá FC</option>
+                <option value="Inter de bebedouro">Inter de bebedouro</option>
+                <option value="Gama">Gama</option>
+                <option value="Portuguesa">Portuguesa</option>
+                
+                
+             </optgroup>
+            <optgroup label="Extintos (BETA)">
+              <option value="Real ituano">Real Ituano</option>
+              <option value="A.C. Juventus">A.C Juventus</option>
+              
+        </select>
+        <div class="score" id="score2">0</div>
+        <button class="btn" onclick="simulateGame()">Simular Jogo</button>
+        <button class="btn" onclick="toggleTheme()">Mudar Fundo</button>
+        <div id="result" style="font-size: 24px; margin-top: 20px;"></div>
+        <div id="goalTimeline" style="margin-top: 20px; font-size: 18px;"></div>
+    </div>
+
+    <script>
+        function simulateGame() {
+            let team1 = document.getElementById('team1Select').value;
+            let team2 = document.getElementById('team2Select').value;
+
+            if (team1 === team2) {
+                alert('Os times não podem ser iguais!');
+                return;
+            }
+
+            let score1 = Math.floor(Math.random() * 6);
+            let score2 = Math.floor(Math.random() * 6);
+
+            document.getElementById('score1').innerText = score1;
+            document.getElementById('score2').innerText = score2;
+
+            let resultText = '';
+            if (score1 > score2) {
+                resultText = `${team1} venceu!`;
+            } else if (score2 > score1) {
+                resultText = `${team2} venceu!`;
+            } else {
+                resultText = 'Empate!';
+            }
+            document.getElementById('result').innerText = resultText;
+
+            // Gerar os minutos dos gols
+            const goalTimeline = [];
+            for (let i = 0; i < score1; i++) {
+                const minute = Math.floor(Math.random() * 90) + 1;
+                goalTimeline.push(`${team1} marcou aos ${minute} minutos`);
+            }
+            for (let i = 0; i < score2; i++) {
+                const minute = Math.floor(Math.random() * 90) + 1;
+                goalTimeline.push(`${team2} marcou aos ${minute} minutos`);
+            }
+
+            // Ordenar os eventos pela ordem cronológica
+            goalTimeline.sort((a, b) => {
+                const minuteA = parseInt(a.match(/\d+/)[0]);
+                const minuteB = parseInt(b.match(/\d+/)[0]);
+                return minuteA - minuteB;
+            });
+
+            document.getElementById('goalTimeline').innerHTML = goalTimeline.join('<br>');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
